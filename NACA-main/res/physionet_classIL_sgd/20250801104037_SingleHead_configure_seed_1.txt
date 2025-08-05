@@ -1,0 +1,30 @@
+pid:15172
+{'seed': 1
+ 'mini': False
+ 'experiment': 'physionet_classIL'
+ 'approach': 'sgd'
+ 'output': '../res/physionet_classIL_sgd/20250801104037_SingleHead'
+ 'nepochs': 100
+ 'lr': 0.0005
+ 'lr_factor': 1
+ 'parameter': ''
+ 'gpu': '0'
+ 'multi_output': False
+ 'nhid': 1000
+ 'sbatch': 256
+ 'nlayers': 1
+ 'fixed_order': False
+ 'thresh': 0.5
+ 'lens': 0.2
+ 'decay': 0.2
+ 'spike_windows': 20
+ 'lambda_inv': 0.5
+ 'theta_max': 1.2
+ 'distribution': 'normal'}
+
+Net(
+  (act): Sigmoid()
+  (drop): Dropout(p=0, inplace=False)
+  (fc1): Linear(in_features=40960, out_features=1000, bias=False)
+  (last): Linear(in_features=1000, out_features=4, bias=True)
+)
