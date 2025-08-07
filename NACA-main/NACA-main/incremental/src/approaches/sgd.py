@@ -17,7 +17,8 @@ class Appr(object):
         self.clipgrad = clipgrad
         self.nlab = nlab
 
-        self.criterion = torch.nn.MSELoss()
+        # self.criterion = torch.nn.MSELoss()
+        self.criterion = torch.nn.CrossEntropyLoss()
         self.optimizer = self._get_optimizer()
 
         return
@@ -27,6 +28,7 @@ class Appr(object):
         return torch.optim.SGD(self.model.parameters(), lr=lr)
 
     def train(self, t, xtrain, ytrain, xvalid, yvalid):
+        print(">>> Using SGD model")
         best_loss = np.inf
         best_model = utils.get_model(self.model)
         lr = self.lr

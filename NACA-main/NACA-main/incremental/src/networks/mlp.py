@@ -4,6 +4,7 @@ import torch
 
 class Net(torch.nn.Module):
     def __init__(self, args, inputsize, taskcla, labsize, nhid, nlayers=1):
+        print(">>> Using MLP")
         super(Net, self).__init__()
 
         ncha, size, size2 = inputsize

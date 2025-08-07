@@ -23,6 +23,7 @@ class Appr(object):
         self.clipgrad = clipgrad
         self.mse = torch.nn.MSELoss()
         self.ce = torch.nn.CrossEntropyLoss()
+        self.criterion = torch.nn.CrossEntropyLoss()
         self.optimizer = self._get_optimizer()
         self.lamb = lamb
         if len(args.parameter) >= 1:
@@ -49,6 +50,7 @@ class Appr(object):
         return torch.optim.SGD(self.model.parameters(), lr=lr)
 
     def train(self, t, xtrain, ytrain, xvalid, yvalid):
+        print(">>> Using EWC model")
         best_loss = np.inf
         best_model = utils.get_model(self.model)
         lr = self.lr
@@ -136,7 +138,7 @@ class Appr(object):
                 target = targets
             else:
                 target = torch.zeros_like(output).to(targets.device).scatter_(1, targets.unsqueeze(1).long(), 1.0)
-            loss = self.criterion(t, output, target)
+            loss = self.criterion( output, target)
 
             # Backward
             self.optimizer.zero_grad()
@@ -173,7 +175,7 @@ class Appr(object):
                 target = targets
             else:
                 target = torch.zeros_like(output).to(targets.device).scatter_(1, targets.unsqueeze(1).long(), 1.0)
-            loss = self.criterion(t, output, target)
+            loss = self.criterion(output, target)
             _, pred = output.max(1)
             hits = (pred == targets).float()
 
@@ -184,13 +186,13 @@ class Appr(object):
 
         return total_loss / total_num, total_acc / total_num
 
-    def criterion(self, t, output, targets):
-        # Regularization for all previous tasks
-        loss_reg = 0
-        if t > 0:
-            for (name, param), (_, param_old) in zip(self.model.named_parameters(), self.model_old.named_parameters()):
-                loss_reg += torch.sum(self.fisher[name] * (param_old - param).pow(2)) / 2
-        if utils.args.approach == 'ewc':
-            return self.ce(output, targets) + self.lamb * loss_reg
-        else:
-            return self.mse(output, targets) + self.lamb * loss_reg
+    # def criterion(self, t, output, targets):
+    #     # Regularization for all previous tasks
+    #     loss_reg = 0
+    #     if t > 0:
+    #         for (name, param), (_, param_old) in zip(self.model.named_parameters(), self.model_old.named_parameters()):
+    #             loss_reg += torch.sum(self.fisher[name] * (param_old - param).pow(2)) / 2
+    #     if utils.args.approach == 'ewc':
+    #         return self.ce(output, targets) + self.lamb * loss_reg
+    #     else:
+    #         return self.mse(output, targets) + self.lamb * loss_reg

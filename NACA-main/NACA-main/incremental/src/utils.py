@@ -12,7 +12,8 @@ delta_bias = {
     "gesture_classIL": 0.2,
     "alphabet_classIL": 0.2,
     "mathgreek_classIL": None,
-    'physionet_classIL': 0.0
+    'physionet_classIL': 0.0,
+    'isruc_classIL': 0.0
 }
 
 bias = {
@@ -21,7 +22,8 @@ bias = {
     "gesture_classIL": None,
     "alphabet_classIL": None,
     "mathgreek_classIL": 0.8,
-    'physionet_classIL': 0.0
+    'physionet_classIL': 0.0,
+    'isruc_classIL': 0.0
 }
 
 

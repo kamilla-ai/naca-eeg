@@ -9,10 +9,10 @@ tstart = time.time()
 # Arguments
 parser = argparse.ArgumentParser(description='')
 # Common parameters for all methods
-parser.add_argument('--seed', type=int, default=1)
+parser.add_argument('--seed', type=int, default=0)
 parser.add_argument('--mini', action='store_true', help='Use the mini dataset')
-parser.add_argument('--experiment', default='physionet_classIL', type=str, required=False, choices=['mnist_classIL', 'cifar_classIL', 'gesture_classIL', 'alphabet_classIL', 'mathgreek_classIL', 'physionet_classIL'])
-parser.add_argument('--approach', default='sgd', type=str, required=False, choices=['sgd', 'ewc', 'naca', 'sgdsnn', 'ewcsnn', 'nacasnn'])
+parser.add_argument('--experiment', default='isruc_classIL', type=str, required=False, choices=['mnist_classIL', 'cifar_classIL', 'gesture_classIL', 'alphabet_classIL', 'mathgreek_classIL', 'physionet_classIL', 'isruc_classIL'])
+parser.add_argument('--approach', default= 'ewc', type=str, required=False, choices=['sgd', 'ewc', 'naca', 'sgdsnn', 'ewcsnn', 'nacasnn'])
 parser.add_argument('--output', default='', type=str, required=False)
 parser.add_argument('--nepochs', default=100, type=int, required=False)
 parser.add_argument('--lr', default=5e-4, type=float, required=False) # 5e-4 is the best parameters for nacasnn in MNIST dataset
@@ -83,6 +83,8 @@ elif args.experiment == 'mathgreek_classIL':
     from dataloaders import mathgreek_classIL as dataloader
 elif args.experiment == 'physionet_classIL':
     from dataloaders import physionet_classIL as dataloader
+elif args.experiment == 'isruc_classIL':
+    from dataloaders import isruc_classIL as dataloader
 
 # Args -- Approachs -- Networks
 if args.approach == 'sgd':

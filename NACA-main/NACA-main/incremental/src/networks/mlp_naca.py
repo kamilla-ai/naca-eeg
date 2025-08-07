@@ -14,6 +14,7 @@ spike_args = {}
 
 class Net(torch.nn.Module):
     def __init__(self, args, inputsize, taskcla, nlab, nhid=40, nlayers=3):
+        print(">>> Using MLP NACA")
         super(Net, self).__init__()
 
         self.args = args
